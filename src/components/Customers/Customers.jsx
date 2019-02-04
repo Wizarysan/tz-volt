@@ -53,9 +53,34 @@ class Customers extends Component {
             return res.json()
         })
         .then(customer=> {
-            console.log(document.getElementById('editForm').controls)            
+            let form = document.getElementById('editForm').elements
+            form[0].value = customer.name;
+            form[1].value = customer.address;
+            form[2].value = customer.phone;
         })
         .catch(err=> console.log(err))   
+    }
+
+    onEditCustomerConfirm(form){
+        let data = {}
+        let x = [...form.elements].forEach(item=> {
+            if(!item.name) return
+            data[item.name] = item.value
+        })
+        fetch(`/api/customers/${this.state.targeted}`, 
+        {
+            method: 'PUT',    
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify(data)
+        }
+        ).then(res=> {
+            this.onCloseModal('editModal')
+            this.fetchCustomers()
+            return res.json()
+        }).catch(err=> console.log(err))
     }
 
     onDeleteCustomer(id) {        
@@ -71,6 +96,7 @@ class Customers extends Component {
     }
 
     onAddCustomer(form) {
+        //To collect form
         let data = {}
         let x = [...form.elements].forEach(item=> {
             if(!item.name) return
