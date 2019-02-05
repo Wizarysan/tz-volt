@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
 import {collectForm} from './../../helpers/formHelpers';
 
-import Customer from './../Customer/Customer';
 import EditCustomer from './../Modals/EditCustomer'
 import DeleteCustomer from './../Modals/DeleteCustomer'
 import AddCustomer from './../Modals/AddCustomer'
+import TableEntry from './../Customer/Customer';
 
 class Customers extends Component {
     constructor(props) {
@@ -117,12 +117,14 @@ class Customers extends Component {
     render() {
         if(this.state.fetchError) return <h4>Fetching error, try again</h4>
         let customers = this.state.customers.map(customer => {
-            return <Customer
-                        key={customer.id}  
-                        id={customer.id} 
-                        name={customer.name} 
-                        address={customer.address} 
-                        phone={customer.phone}
+            return <TableEntry
+                        key={customer.id}
+                        fields={{
+                            id: customer.id,
+                            name: customer.name,
+                            address: customer.address,
+                            phone: customer.phone,
+                        }}  
                         editHandler={()=>{
                             this.onEditCustomer(customer.id)
                             this.onOpenModal('editModal', customer.id)

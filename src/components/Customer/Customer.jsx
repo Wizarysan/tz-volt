@@ -1,23 +1,21 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-const Customer = ({editHandler, deleteHandler, targetHandler, id, name, address, phone}) => {
+const TableEntry = ({editHandler, deleteHandler, targetHandler, fields}) => {
+    let renderedFields = Object.keys(fields).map(field=> <td key={field}>{fields[field]}</td>)
     return (
         <tr>
-            <td>{id}</td>
-            <td>{name}</td>
-            <td>{address}</td>
-            <td>{phone}</td>
+            {renderedFields}
             <td><Button variant="outline-primary" onClick={()=>{
-                    targetHandler(id)
-                    editHandler(id)
+                    targetHandler(fields.id)
+                    editHandler(fields.id)
                 }}>Edit</Button></td>
             <td><Button variant="outline-danger" onClick={()=>{
-                    targetHandler(id)
-                    deleteHandler(id)
+                    targetHandler(fields.id)
+                    deleteHandler(fields.id)
                 }}>Delete</Button></td>
         </tr>
     );
 }
 
-export default Customer;
+export default TableEntry;
