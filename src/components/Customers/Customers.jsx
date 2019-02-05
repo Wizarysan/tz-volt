@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
 import Modal from 'react-responsive-modal';
+import {collectForm} from './../../helpers/formHelpers';
 
 import Customer from './../Customer/Customer';
+import EditCustomer from './../Modals/EditCustomer'
 
 class Customers extends Component {
     constructor(props) {
@@ -62,11 +64,6 @@ class Customers extends Component {
     }
 
     onEditCustomerConfirm(form){
-        let data = {}
-        let x = [...form.elements].forEach(item=> {
-            if(!item.name) return
-            data[item.name] = item.value
-        })
         fetch(`/api/customers/${this.state.targeted}`, 
         {
             method: 'PUT',    
@@ -74,7 +71,7 @@ class Customers extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }, 
-            body: JSON.stringify(data)
+            body: JSON.stringify(collectForm(form))
         }
         ).then(res=> {
             this.onCloseModal('editModal')
@@ -96,12 +93,6 @@ class Customers extends Component {
     }
 
     onAddCustomer(form) {
-        //To collect form
-        let data = {}
-        let x = [...form.elements].forEach(item=> {
-            if(!item.name) return
-            data[item.name] = item.value
-        })
         fetch('/api/customers', 
             {
                 method: 'POST',    
@@ -109,7 +100,7 @@ class Customers extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }, 
-                body: JSON.stringify(data)
+                body: JSON.stringify(collectForm(form))
             }
         ).then(res=> {
             this.onCloseModal('addModal')
@@ -158,29 +149,7 @@ class Customers extends Component {
                     {customers}
                 </tbody>
                 </Table>
-                <Modal open={this.state.editModal} onClose={()=>{this.onCloseModal('editModal')}} center>
-                    <h3>Edit customer</h3>
-                    <Form onSubmit={(e)=>{
-                            e.preventDefault()
-                            this.onEditCustomerConfirm(e.target);    
-                        }} id="editForm">
-                        <Form.Group controlId="formName">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" name="name" placeholder="Enter name" />
-                        </Form.Group>
-                        <Form.Group controlId="formAddress">
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control type="text" name="address" placeholder="Address" />
-                        </Form.Group>
-                        <Form.Group controlId="formPhone">
-                            <Form.Label>Phone</Form.Label>
-                            <Form.Control type="text" name="phone" placeholder="Phone" />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Submit
-                        </Button>
-                    </Form>
-                </Modal>
+                <EditCustomer open={this.state.editModal} onCloseModal={(name)=>this.onCloseModal(name)} onEditCustomerConfirm={(form)=>this.onEditCustomerConfirm(form)} />
                 <Modal open={this.state.deleteModal} onClose={()=>{this.onCloseModal('deleteModal')}} center>
                     <h3>Delete customer</h3>
                     <p>Confirm Customer deletion?</p>
