@@ -5,6 +5,8 @@ import {collectForm} from './../../helpers/formHelpers';
 
 import Customer from './../Customer/Customer';
 import EditCustomer from './../Modals/EditCustomer'
+import DeleteCustomer from './../Modals/DeleteCustomer'
+import AddCustomer from './../Modals/AddCustomer'
 
 class Customers extends Component {
     constructor(props) {
@@ -92,7 +94,7 @@ class Customers extends Component {
         }).catch(err=> console.log(err))    
     }
 
-    onAddCustomer(form) {
+    onAddCustomer(form) { 
         fetch('/api/customers', 
             {
                 method: 'POST',    
@@ -149,36 +151,9 @@ class Customers extends Component {
                     {customers}
                 </tbody>
                 </Table>
-                <EditCustomer open={this.state.editModal} onCloseModal={(name)=>this.onCloseModal(name)} onEditCustomerConfirm={(form)=>this.onEditCustomerConfirm(form)} />
-                <Modal open={this.state.deleteModal} onClose={()=>{this.onCloseModal('deleteModal')}} center>
-                    <h3>Delete customer</h3>
-                    <p>Confirm Customer deletion?</p>
-                    <Button variant="danger" onClick={()=>{this.onDeleteCustomer(this.state.targeted)}}>Delete</Button>
-                    <Button variant="outline-primary" onClick={()=>{this.onCloseModal('deleteModal')}}>Cancel</Button>
-                </Modal>
-                <Modal open={this.state.addModal} onClose={()=>{this.onCloseModal('addModal')}} center>
-                    <h3>Add customer</h3>
-                    <Form onSubmit={(e)=>{
-                            e.preventDefault()
-                            this.onAddCustomer(e.target);    
-                        }}>
-                        <Form.Group controlId="addFormName">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" name="name" placeholder="Enter name" />
-                        </Form.Group>
-                        <Form.Group controlId="addFormAddress">
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control type="text" name="address" placeholder="Address" />
-                        </Form.Group>
-                        <Form.Group controlId="addFormPhone">
-                            <Form.Label>Phone</Form.Label>
-                            <Form.Control type="text" name="phone" placeholder="Phone" />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Submit
-                        </Button>
-                    </Form>
-                </Modal>
+                <EditCustomer open={this.state.editModal} onCloseModal={name=>this.onCloseModal(name)} onEditCustomerConfirm={(form)=>this.onEditCustomerConfirm(form)} />
+                <AddCustomer open={this.state.addModal} onCloseModal={name=>this.onCloseModal(name)} onAddCustomer={(form)=>this.onAddCustomer(form)} />
+                <DeleteCustomer open={this.state.deleteModal} onCloseModal={name=>this.onCloseModal(name)} onDeleteCustomer={()=>this.onDeleteCustomer(this.state.targeted)} />
             </div>
         );
     }
