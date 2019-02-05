@@ -7,7 +7,7 @@ import EditCustomer from './../Modals/EditCustomer'
 import DeleteCustomer from './../Modals/DeleteCustomer'
 import AddCustomer from './../Modals/AddCustomer'
 
-class Customers extends Component {
+class Products extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -15,7 +15,6 @@ class Customers extends Component {
             editModal: false,
             deleteModal: false,
             addModal: false,
-            fetchError: false,
             editing: 0,
             targeted: 0
         }
@@ -44,14 +43,11 @@ class Customers extends Component {
     }
 
     fetchCustomers() {
-        this.setState({fetchError:false}, ()=> fetch('/api/customers').then(res=> {
+        fetch('/api/customers').then(res=> {
             return res.json()
         }).then(customers=> {
             this.setState({customers})          
-        }).catch(err=> {
-            this.setState({fetchError:true})
-            console.log(err)
-        }))
+        }).catch(err=> console.log(err))
     }
 
     onEditCustomer(id) {
@@ -115,7 +111,6 @@ class Customers extends Component {
     }
     
     render() {
-        if(this.state.fetchError) return <h4>Fetching error, try again</h4>
         let customers = this.state.customers.map(customer => {
             return <Customer
                         key={customer.id}  
@@ -163,4 +158,4 @@ class Customers extends Component {
     }
 }
 
-export default Customers;
+export default Products;
