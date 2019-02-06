@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import {collectForm} from './../../helpers/formHelpers';
 
+import ListWrapper from './../StyledWrappers/ListWrapper'
 import TableEntry from '../TableEntry/TableEntry';
 import EditProduct from './../Modals/EditProduct'
 import DeleteConfirm from '../Modals/DeleteConfirm'
@@ -132,7 +133,7 @@ class Products extends Component {
         })
 
         return (
-            <div className="container customers">
+            <ListWrapper className="container customers">
                 <h1>Products List</h1>
                 <Button variant="outline-dark" onClick={()=>{this.onOpenModal('addModal')}}>Add</Button> 
                 <Table responsive>
@@ -152,7 +153,7 @@ class Products extends Component {
                 <EditProduct open={this.state.editModal} onCloseModal={name=>this.onCloseModal(name)} onEditProductConfirm={(form)=>this.onEditProductConfirm(form)} />
                 <AddProduct open={this.state.addModal} onCloseModal={name=>this.onCloseModal(name)} onAddProduct={(form)=>this.onAddProduct(form)} />
                 <DeleteConfirm title="Delete product" open={this.state.deleteModal} onCloseModal={name=>this.onCloseModal(name)} onDelete={()=>this.onDeleteProduct(this.state.targeted)} />
-            </div>
+            </ListWrapper>
         );
     }
 }

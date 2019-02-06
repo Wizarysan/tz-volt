@@ -4,9 +4,9 @@ import { Button, Form } from 'react-bootstrap';
 
 const AddCustomer = ({open, onCloseModal, onAddCustomer}) => {
     return (
-        <Modal open={open} onClose={()=>{onCloseModal('addModal')}} center>
+        <Modal classNames={{modal: "modal-padded"}} open={open} onClose={()=>{onCloseModal('addModal')}} center>
             <h3>Add customer</h3>
-            <Form onSubmit={(e)=>{
+            <Form className="modal-form" onSubmit={(e)=>{
                     e.preventDefault()
                     onAddCustomer(e.target);    
                 }}>

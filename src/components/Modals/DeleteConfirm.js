@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 const DeleteConfirm = ({title, open, onCloseModal, onDelete}) => {
     return (
-        <Modal open={open} onClose={()=>{onCloseModal('deleteModal')}} center>
+        <Modal classNames={{modal: "modal-padded"}} open={open} onClose={()=>{onCloseModal('deleteModal')}} center>
             <h3>{title}</h3>
             <p>Confirm entry deletion?</p>
             <Button variant="danger" onClick={target=>{onDelete(target)}}>Delete</Button>

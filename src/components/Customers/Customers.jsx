@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import {collectForm} from './../../helpers/formHelpers';
 
+import ListWrapper from './../StyledWrappers/ListWrapper'
 import EditCustomer from './../Modals/EditCustomer'
 import DeleteConfirm from '../Modals/DeleteConfirm'
 import AddCustomer from './../Modals/AddCustomer'
 import TableEntry from './../TableEntry/TableEntry';
+
 
 class Customers extends Component {
     constructor(props) {
@@ -139,7 +141,7 @@ class Customers extends Component {
         })
 
         return (
-            <div className="container customers">
+            <ListWrapper className="container customers">
                 <h1>Customer List</h1>
                 <Button variant="outline-dark" onClick={()=>{this.onOpenModal('addModal')}}>Add</Button> 
                 <Table responsive>
@@ -160,7 +162,7 @@ class Customers extends Component {
                 <EditCustomer open={this.state.editModal} onCloseModal={name=>this.onCloseModal(name)} onEditCustomerConfirm={(form)=>this.onEditCustomerConfirm(form)} />
                 <AddCustomer open={this.state.addModal} onCloseModal={name=>this.onCloseModal(name)} onAddCustomer={(form)=>this.onAddCustomer(form)} />
                 <DeleteConfirm title="Delete customer" open={this.state.deleteModal} onCloseModal={name=>this.onCloseModal(name)} onDelete={()=>this.onDeleteCustomer(this.state.targeted)} />
-            </div>
+            </ListWrapper>
         );
     }
 }

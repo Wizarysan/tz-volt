@@ -4,9 +4,9 @@ import { Button, Form } from 'react-bootstrap';
 
 const EditCustomer = ({open, onCloseModal, onEditCustomerConfirm}) => {
     return (
-        <Modal open={open} onClose={()=>{onCloseModal('editModal')}} center>
+        <Modal classNames={{modal: "modal-padded"}} open={open} onClose={()=>{onCloseModal('editModal')}} center>
         <h3>Edit customer</h3>
-        <Form onSubmit={(e)=>{
+        <Form className="modal-form" onSubmit={(e)=>{
                 e.preventDefault()
                 onEditCustomerConfirm(e.target);    
             }} id="editForm">

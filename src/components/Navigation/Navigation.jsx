@@ -11,9 +11,6 @@ const Navigation = () => {
             </LinkContainer>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <LinkContainer to="/invoices">
-                        <Nav.Link>Invoices</Nav.Link>
-                    </LinkContainer>
                     <LinkContainer to="/products">
                         <Nav.Link>Products</Nav.Link>
                     </LinkContainer>
