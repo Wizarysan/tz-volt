@@ -3,9 +3,9 @@ import { Table, Button, Form } from 'react-bootstrap';
 import {collectForm} from './../../helpers/formHelpers';
 
 import EditCustomer from './../Modals/EditCustomer'
-import DeleteCustomer from './../Modals/DeleteCustomer'
+import DeleteConfirm from '../Modals/DeleteConfirm'
 import AddCustomer from './../Modals/AddCustomer'
-import TableEntry from './../Customer/Customer';
+import TableEntry from './../TableEntry/TableEntry';
 
 class Customers extends Component {
     constructor(props) {
@@ -159,7 +159,7 @@ class Customers extends Component {
                 </Table>
                 <EditCustomer open={this.state.editModal} onCloseModal={name=>this.onCloseModal(name)} onEditCustomerConfirm={(form)=>this.onEditCustomerConfirm(form)} />
                 <AddCustomer open={this.state.addModal} onCloseModal={name=>this.onCloseModal(name)} onAddCustomer={(form)=>this.onAddCustomer(form)} />
-                <DeleteCustomer open={this.state.deleteModal} onCloseModal={name=>this.onCloseModal(name)} onDeleteCustomer={()=>this.onDeleteCustomer(this.state.targeted)} />
+                <DeleteConfirm title="Delete customer" open={this.state.deleteModal} onCloseModal={name=>this.onCloseModal(name)} onDelete={()=>this.onDeleteCustomer(this.state.targeted)} />
             </div>
         );
     }

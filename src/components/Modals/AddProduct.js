@@ -2,25 +2,21 @@ import React from 'react';
 import Modal from 'react-responsive-modal';
 import { Button, Form } from 'react-bootstrap';
 
-const AddCustomer = ({open, onCloseModal, onAddCustomer}) => {
+const AddProduct = ({open, onCloseModal, onAddProduct}) => {
     return (
         <Modal open={open} onClose={()=>{onCloseModal('addModal')}} center>
-            <h3>Add customer</h3>
+            <h3>Add product</h3>
             <Form onSubmit={(e)=>{
                     e.preventDefault()
-                    onAddCustomer(e.target);    
+                    onAddProduct(e.target);    
                 }}>
                 <Form.Group controlId="addFormName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" name="name" placeholder="Enter name" />
                 </Form.Group>
-                <Form.Group controlId="addFormAddress">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control type="text" name="address" placeholder="Address" />
-                </Form.Group>
-                <Form.Group controlId="addFormPhone">
-                    <Form.Label>Phone</Form.Label>
-                    <Form.Control type="text" name="phone" placeholder="Phone" />
+                <Form.Group controlId="addFormPrice">
+                    <Form.Label>Price</Form.Label>
+                    <Form.Control type="text" name="price" placeholder="Price" />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Submit
@@ -30,4 +26,4 @@ const AddCustomer = ({open, onCloseModal, onAddCustomer}) => {
     );
 }
 
-export default AddCustomer;
+export default AddProduct;

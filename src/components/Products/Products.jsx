@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import {collectForm} from './../../helpers/formHelpers';
 
-import Customer from './../Customer/Customer';
+import TableEntry from '../TableEntry/TableEntry';
 import EditCustomer from './../Modals/EditCustomer'
-import DeleteCustomer from './../Modals/DeleteCustomer'
+import DeleteConfirm from '../Modals/DeleteConfirm'
 import AddCustomer from './../Modals/AddCustomer'
 
 class Products extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            customers: [],
+            products: [],
             editModal: false,
             deleteModal: false,
             addModal: false,
@@ -21,7 +21,7 @@ class Products extends Component {
     }
 
     componentDidMount() {
-        this.fetchCustomers()
+        this.fetchProducts()
     }
 
     onOpenModal(type, id) {
@@ -38,34 +38,33 @@ class Products extends Component {
         });
     };
 
-    targetCustomer(id) {      
+    targetProduct(id) {      
         this.setState({targeted: id})
     }
 
-    fetchCustomers() {
-        fetch('/api/customers').then(res=> {
+    fetchProducts() {
+        fetch('/api/products').then(res=> {
             return res.json()
-        }).then(customers=> {
-            this.setState({customers})          
+        }).then(products=> {
+            this.setState({products})          
         }).catch(err=> console.log(err))
     }
 
-    onEditCustomer(id) {
-        fetch(`/api/customers/${id}`)
+    onEditProduct(id) {
+        fetch(`/api/products/${id}`)
         .then(res=> {
             return res.json()
         })
-        .then(customer=> {
+        .then(product=> {
             let form = document.getElementById('editForm').elements
-            form[0].value = customer.name;
-            form[1].value = customer.address;
-            form[2].value = customer.phone;
+            form[0].value = product.name;
+            form[1].value = product.price;
         })
         .catch(err=> console.log(err))   
     }
 
-    onEditCustomerConfirm(form){
-        fetch(`/api/customers/${this.state.targeted}`, 
+    onEditProductConfirm(form){
+        fetch(`/api/products/${this.state.targeted}`, 
         {
             method: 'PUT',    
             headers: {
@@ -76,25 +75,25 @@ class Products extends Component {
         }
         ).then(res=> {
             this.onCloseModal('editModal')
-            this.fetchCustomers()
+            this.fetchProducts()
             return res.json()
         }).catch(err=> console.log(err))
     }
 
-    onDeleteCustomer(id) {        
-        fetch(`/api/customers/${id}`, 
+    onDeleteProduct(id) {        
+        fetch(`/api/products/${id}`, 
             {
                 method: 'DELETE',    
             }
         ).then(res=> {
             this.onCloseModal('deleteModal')
-            this.fetchCustomers()
+            this.fetchProducts()
             return res.json()
         }).catch(err=> console.log(err))    
     }
 
-    onAddCustomer(form) { 
-        fetch('/api/customers', 
+    onAddProduct(form) { 
+        fetch('/api/products', 
             {
                 method: 'POST',    
                 headers: {
@@ -105,54 +104,54 @@ class Products extends Component {
             }
         ).then(res=> {
             this.onCloseModal('addModal')
-            this.fetchCustomers()
+            this.fetchProducts()
             return res.json()
         }).catch(err=> console.log(err))
     }
     
     render() {
-        let customers = this.state.customers.map(customer => {
-            return <Customer
-                        key={customer.id}  
-                        id={customer.id} 
-                        name={customer.name} 
-                        address={customer.address} 
-                        phone={customer.phone}
+        let products = this.state.products.map(product => {
+            return <TableEntry
+                        key={product.id}  
+                        fields={{
+                            id: product.id,
+                            name: product.name,
+                            price: product.price
+                         }} 
                         editHandler={()=>{
-                            this.onEditCustomer(customer.id)
-                            this.onOpenModal('editModal', customer.id)
+                            this.onEditProduct(product.id)
+                            this.onOpenModal('editModal', product.id)
                         }}
                         deleteHandler={()=>{
-                            this.onOpenModal('deleteModal', customer.id)
+                            this.onOpenModal('deleteModal', product.id)
                         }}
                         targetHandler={(id)=>{
-                            this.targetCustomer(id)
+                            this.targetProduct(id)
                         }}
                         />
         })
 
         return (
             <div className="container customers">
-                <h1>Customer List</h1>
+                <h1>Products List</h1>
                 <Button variant="outline-dark" onClick={()=>{this.onOpenModal('addModal')}}>Add</Button> 
                 <Table responsive>
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Address</th>
-                        <th>Phone</th>
+                        <th>Price</th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {customers}
+                    {products}
                 </tbody>
                 </Table>
-                <EditCustomer open={this.state.editModal} onCloseModal={name=>this.onCloseModal(name)} onEditCustomerConfirm={(form)=>this.onEditCustomerConfirm(form)} />
-                <AddCustomer open={this.state.addModal} onCloseModal={name=>this.onCloseModal(name)} onAddCustomer={(form)=>this.onAddCustomer(form)} />
-                <DeleteCustomer open={this.state.deleteModal} onCloseModal={name=>this.onCloseModal(name)} onDeleteCustomer={()=>this.onDeleteCustomer(this.state.targeted)} />
+                <EditCustomer open={this.state.editModal} onCloseModal={name=>this.onCloseModal(name)} onEditProductConfirm={(form)=>this.onEditProductConfirm(form)} />
+                <AddCustomer open={this.state.addModal} onCloseModal={name=>this.onCloseModal(name)} onAddProduct={(form)=>this.onAddProduct(form)} />
+                <DeleteConfirm title="Delete product" open={this.state.deleteModal} onCloseModal={name=>this.onCloseModal(name)} onDelete={()=>this.onDeleteProduct(this.state.targeted)} />
             </div>
         );
     }
