@@ -20,6 +20,11 @@ const GlobalStyle = createGlobalStyle`
 `
 
 class Shop extends React.Component {
+    
+    componentDidMount(){
+        document.title = "Main page";
+    }
+
     render() {
         return (
             <div className="shop">                

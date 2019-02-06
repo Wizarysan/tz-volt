@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import {collectForm} from './../../helpers/formHelpers';
+import DocumentTitle from 'react-document-title';
 
 import ListWrapper from './../StyledWrappers/ListWrapper'
 import TableEntry from '../TableEntry/TableEntry';
@@ -133,6 +134,7 @@ class Products extends Component {
         })
 
         return (
+            <DocumentTitle title='Product list'>
             <ListWrapper className="container customers">
                 <h1>Products List</h1>
                 <Button variant="outline-dark" onClick={()=>{this.onOpenModal('addModal')}}>Add</Button> 
@@ -154,6 +156,7 @@ class Products extends Component {
                 <AddProduct open={this.state.addModal} onCloseModal={name=>this.onCloseModal(name)} onAddProduct={(form)=>this.onAddProduct(form)} />
                 <DeleteConfirm title="Delete product" open={this.state.deleteModal} onCloseModal={name=>this.onCloseModal(name)} onDelete={()=>this.onDeleteProduct(this.state.targeted)} />
             </ListWrapper>
+            </DocumentTitle>
         );
     }
 }
