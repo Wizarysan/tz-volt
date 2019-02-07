@@ -112,7 +112,7 @@ class Products extends Component {
     }
     
     render() {
-        let products = this.state.products.map(product => {
+        const products = this.state.products.map(product => {
             return <TableEntry
                         key={product.id}  
                         fields={{

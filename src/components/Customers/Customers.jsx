@@ -119,7 +119,7 @@ class Customers extends Component {
     
     render() {
         if(this.state.fetchError) return <h4>Fetching error, try again</h4>
-        let customers = this.state.customers.map(customer => {
+        const customers = this.state.customers.map(customer => {
             return <TableEntry
                         key={customer.id}
                         fields={{

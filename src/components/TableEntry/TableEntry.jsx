@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 
 const TableEntry = ({editHandler, deleteHandler, targetHandler, fields}) => {
-    let renderedFields = Object.keys(fields).map(field=> <td key={field}>{fields[field]}</td>)
+    const renderedFields = Object.keys(fields).map(field=> <td key={field}>{fields[field]}</td>)
     return (
         <tr>
             {renderedFields}
