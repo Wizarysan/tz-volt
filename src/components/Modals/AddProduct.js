@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-responsive-modal';
 import { Button, Form } from 'react-bootstrap';
 
@@ -24,6 +25,12 @@ const AddProduct = ({open, onCloseModal, onAddProduct}) => {
             </Form>
         </Modal>
     );
+}
+
+AddProduct.propTypes = {
+    open: PropTypes.func,
+    onCloseModal: PropTypes.func,
+    onAddProduct: PropTypes.func,
 }
 
 export default AddProduct;

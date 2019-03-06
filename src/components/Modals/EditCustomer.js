@@ -30,4 +30,10 @@ const EditCustomer = ({open, onCloseModal, onEditCustomerConfirm}) => {
     );
 }
 
+EditProduct.propTypes = {
+    open: PropTypes.func,
+    onCloseModal: PropTypes.func,
+    onEditCustomerConfirm: PropTypes.func,
+}
+
 export default EditCustomer;

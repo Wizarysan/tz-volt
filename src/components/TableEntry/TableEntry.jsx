@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 const TableEntry = ({editHandler, deleteHandler, targetHandler, fields}) => {
@@ -16,6 +17,13 @@ const TableEntry = ({editHandler, deleteHandler, targetHandler, fields}) => {
                 }}>Delete</Button></td>
         </tr>
     );
+}
+
+TableEntry.propTypes = {
+    editHandler: PropTypes.func,
+    deleteHandler: PropTypes.func,
+    targetHandler: PropTypes.func,
+    fields: PropTypes.object.isRequired,
 }
 
 export default TableEntry;
